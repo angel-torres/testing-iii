@@ -1,21 +1,28 @@
 import React from 'react';
 import { render, fireEvent } from 'react-testing-library';
-import 'jest-dom/extend-expect'
+import 'jest-dom/extend-expect';
+import renderer from 'react-test-renderer';
 
-import Dashboards from './Dashboard';
+import Dashboard from './Dashboard';
 
 describe('<Dashboard/>', () => {
-    // it('toggleClose function should be called', () => {
-    //     const toggleClose = jest.fn()
+    it('should render unlocked', () => {
+        const { getByText } = render(<Dashboard />)
 
-    //     const { getByText } = render(<Dashboards toggleClosed={toggleClose}/>)
+        expect(getByText(/unlocked/i)).toBeInTheDocument();
+    })
 
-    //     const closeGateBtn = getByText(/close gate/i);
+    it('should render open', () => {
+        const { getByText } = render(<Dashboard />)
 
-    //     fireEvent.click(closeGateBtn)
+        expect(getByText(/open/i)).toBeInTheDocument();
+    })
 
-    //     expect(toggleClose).toHaveBeenCalled()
-    // })
+    it('matches snapshot', () => {
+        const tree = renderer.create(<Dashboard />).toJSON()
+
+        expect(tree).toMatchSnapshot();
+    })
 })
 
 
